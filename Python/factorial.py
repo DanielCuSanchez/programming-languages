@@ -24,3 +24,12 @@ def factorial_recursive(n):
 
 print("Recursive: ",factorial_recursive(5))
 
+""" Recursive using optimizitation """
+def factorial_tail(n,a):
+    if n < 1:
+      return a
+    else:
+      return factorial_tail(n - 1, n * a)
+
+print("Recursive tail: ",factorial_tail(5,1))
+

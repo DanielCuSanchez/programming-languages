@@ -1,0 +1,68 @@
+Programming languages
+Daniel Cu Sánchez - A01703613
+
+
+This activity will allow you to understand how to describe a programming language using a Context Free Grammar.
+You will understand how the Backus-Naur Form (BNF) and Extended Backus-Naur Form (EBNF)
+can be used to describe the grammatical rules that a programmer must follow to construct valid statements.
+
+You will practice by building the notation to describe some of the control structures in
+languages that you already know.
+
+
+
+BNF Switch statement in C
+
+# All cases
+<switch> ::= switch ( <variable> ) { <general-cases> }
+
+<general-cases>
+	::= <cases> | <case> | <default> # default case
+<cases>
+  ::= <case> | <case> # One case per case
+<cases>
+
+<case>
+  ::= <header>
+  <code> break; # End of each case
+  <header>
+    ::= <head>|<head>
+  <header>
+
+<head>
+  ::= case <value>:
+<default> ::= default: <code> # Default case
+
+
+
+EBNF Switch statement in C
+
+SWITCH ::= switch '('variable')' '{'{case} [default]'}'
+CASE ::= {head} CODE break;
+HEAD ::= case VALUE:
+DEFAULT ::= default: CODE
+
+
+BNF foor loop in python
+
+<For>::= for <expression> in range (start, stop, step)
+
+EBNF foor loop in python
+FOR ::= for in range
+RANGE ::= '('variable','variable', 'variable')'
+
+BNF case or cond statement in Racket
+
+  <cond>
+    ::= (cond <cond-clause> | <cond-clause> <cond-clause> )
+
+  <cond-clause>
+    ::= [ ( <test-expr> ) then-body ] #if true
+      | [ ( <test-expr> ) => proc-expr ]
+      | [ ( <test-expr> ) ]
+      | [ else then-body ] # case not true
+
+EBNF case or cond statement in Racket
+  COND ::= '('cond {COND-CLAUSE} ')'
+  COND-CLAUSE ::= '[' '(' TEST-EXPR ')'
+    ( [THEN-BODY] ['=>' PROC-EXPR ] [else THEN-BODY ] ) ']'

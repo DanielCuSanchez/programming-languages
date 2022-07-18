@@ -34,31 +34,31 @@ do
 
 
   # 3) deep_reverse: Takes a list as arguments. The list may contain nested lists. It will return another list, where the elements are in reverse order. The elements in any nested list must also reverse their order. You can NOT use the built in function for reverse:
-  def deep_reverse(list), do: do_deep_reverse(list, [])
+  def deep_reverse(list), do: deep_reverse_help(list, [])
   #If the list is empty, return result
-  defp do_deep_reverse([], result),
+  defp deep_reverse_help([], result),
     do: result
   #Reverse the elements on the nested list
-  defp do_deep_reverse([head | tail], result) when is_list(head),
-    do: do_deep_reverse(tail, [deep_reverse(head) | result])
+  defp deep_reverse_help([head | tail], result) when is_list(head),
+    do: deep_reverse_help(tail, [deep_reverse(head) | result])
   #Reverse the elements on the list
-  defp do_deep_reverse([head | tail], result),
-    do: do_deep_reverse(tail, [head | result])
+  defp deep_reverse_help([head | tail], result),
+    do: deep_reverse_help(tail, [head | result])
 
 
 
   # 4) mean: Takes a list of numbers as argument. Computes the average of its values, as the sum of all of them divided by the number of elements in the list
-  def mean(list), do: do_mean(list, 0, 0)
+  def mean(list), do: mean_help(list, 0, 0)
   #If the list starts empty
-  defp do_mean([], 0, 0),
+  defp mean_help([], 0, 0),
     do: 0
   # End of list case
-  defp do_mean([], result, counter),
+  defp mean_help([], result, counter),
     do: result/counter#Returns the mean
   # Appliying recursion
-  defp do_mean([head | tail], result, counter),
+  defp mean_help([head | tail], result, counter),
   #countering the elements by adding 1 to counter
-    do: do_mean(tail, head + result, counter + 1)
+    do: mean_help(tail, head + result, counter + 1)
 
 
   # 5) std_dev: Takes a list of numbers as argument. Computes the standard deviation, using the following formula:

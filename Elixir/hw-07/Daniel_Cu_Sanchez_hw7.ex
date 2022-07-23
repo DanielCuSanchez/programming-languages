@@ -77,6 +77,12 @@ defmodule Hw.CSVFiles do
         _letter = "C"
       number > 69 && number < 73 ->
         _letter = "C-"
+      number > 66 && number < 70 ->
+        _letter = "D+"
+      number > 63 && number < 67 ->
+        _letter = "D"
+      number < 64 ->
+        _letter = "E"
     end
   end
   #formating date

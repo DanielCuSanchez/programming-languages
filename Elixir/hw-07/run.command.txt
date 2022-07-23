@@ -1,0 +1,3 @@
+iex Daniel_Cu_Sanchez_hw7.ex
+
+Hw.CSVFiles.main()

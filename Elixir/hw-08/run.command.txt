@@ -1,0 +1,4 @@
+iex Daniel_Cu_Sanchez_hw8.ex
+
+Hw.Primes.sum_primes(5000)
+Hw.Primes.sum_primes_parallel(5000)

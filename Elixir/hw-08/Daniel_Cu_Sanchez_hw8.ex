@@ -11,9 +11,9 @@
 defmodule Hw.Primes do
 
   # This functions can run both functions sequential and parallel, we can add the number of times
-  def main(times) do
+  def main(times, q_cores) do
     time_seq = Hw.Primes.time(fn -> Hw.Primes.sum_primes(times) end)
-    time_parallel = Hw.Primes.time(fn -> Hw.Primes.sum_primes_parallel(times) end)
+    time_parallel = Hw.Primes.time(fn -> Hw.Primes.sum_primes_parallel(times, q_cores) end)
     statistics(time_seq, time_parallel)
   end
 
@@ -24,9 +24,9 @@ defmodule Hw.Primes do
   end
 
   #A function called sum_primes_parallel, that takes two arguments: the limit of the prime numbers to add, and the number of threads to launch. It returns the sum of all prime numbers between 2 and limit, computed in parallel
-  def sum_primes_parallel(until_number) do
+  def sum_primes_parallel(until_number, cores) do
     IO.puts("Parallel THREAD")
-    cores = 12 # This number was gotten by System.schedulers
+    # This number was gotten by System.schedulers
     list_cores = Enum.to_list(1..cores) #Makes a list of [1,..,12]
     block = div(until_number, cores) #Creates a block
     limit_botton = for core <- list_cores do
@@ -106,6 +106,6 @@ defmodule Hw.Primes do
   def statistics(time_seq,time_parallel) do
     IO.puts("Sequetial time: #{time_seq}ms")
     IO.puts("Parallel time: #{time_parallel}ms")
-    IO.puts("Diference time: #{time_seq - time_parallel}ms")
+    IO.puts("Speed up: #{time_seq / time_parallel} x faster")
   end
 end

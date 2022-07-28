@@ -6,16 +6,15 @@
 # Hw.Primes.sum_primes_parallel(5000)
 # Hw.Primes.time(fn -> Hw.Primes.sum_primes(5000) end)
 # Hw.Primes.time(fn -> Hw.Primes.sum_primes_parallel(5000) end)
-# Hw.Primes.main(500000)
+# Hw.Primes.main(100)
 
 defmodule Hw.Primes do
 
   # This functions can run both functions sequential and parallel, we can add the number of times
   def main(times) do
-    Hw.Primes.time(fn -> Hw.Primes.sum_primes(times) end)
-      |> IO.puts()
-    Hw.Primes.time(fn -> Hw.Primes.sum_primes_parallel(times) end)
-      |> IO.puts()
+    time_seq = Hw.Primes.time(fn -> Hw.Primes.sum_primes(times) end)
+    time_parallel = Hw.Primes.time(fn -> Hw.Primes.sum_primes_parallel(times) end)
+    statistics(time_seq, time_parallel)
   end
 
   # sum_primes, that receives a single argument, the top limit of the prime numbers to add. It will return the sum of all prime numbers between 2 and the limit provided. This function will work sequentially.
@@ -28,10 +27,10 @@ defmodule Hw.Primes do
   def sum_primes_parallel(until_number) do
     IO.puts("Parallel THREAD")
     cores = 12 # This number was gotten by System.schedulers
-    list_cores = Enum.to_list(1..cores) #Makes a list of [1,..,8]
+    list_cores = Enum.to_list(1..cores) #Makes a list of [1,..,12]
     block = div(until_number, cores) #Creates a block
-    limit_botton = for y <- list_cores do
-      (y - 1) * block
+    limit_botton = for core <- list_cores do
+      (core - 1) * block
     end
     limit_top = for x <- list_cores do
       if x == cores do
@@ -40,8 +39,16 @@ defmodule Hw.Primes do
         (block * x)
       end
     end
-    _result = 1..cores
-      |> Enum.map(&Task.async(fn -> sum_primes_range(Enum.at(limit_botton, (&1 - 1)), Enum.at(limit_top, (&1 - 1))) end)) #We call the parallel prime function
+    1..cores
+      |> Enum.map(
+          &Task.async(
+              fn -> sum_primes_range(
+                  Enum.at(
+                    limit_botton, (&1 - 1)),
+                    Enum.at(limit_top, (&1 - 1)))
+                  end
+              )
+          ) #We call the parallel prime function
       |> Enum.map(&Task.await(&1, 50000)) #Wait for each tasks to end
       |> Enum.sum() #Sum all the results to get the total
   end
@@ -94,5 +101,11 @@ defmodule Hw.Primes do
     |> IO.inspect()
     |> elem(0)
     |> Kernel./(1_000_000)
+  end
+
+  def statistics(time_seq,time_parallel) do
+    IO.puts("Sequetial time: #{time_seq}ms")
+    IO.puts("Parallel time: #{time_parallel}ms")
+    IO.puts("Diference time: #{time_seq - time_parallel}ms")
   end
 end

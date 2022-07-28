@@ -11,9 +11,10 @@
 defmodule Hw.Primes do
 
   # This functions can run both functions sequential and parallel, we can add the number of times
-  def main(times, q_cores) do
-    time_seq = Hw.Primes.time(fn -> Hw.Primes.sum_primes(times) end)
-    time_parallel = Hw.Primes.time(fn -> Hw.Primes.sum_primes_parallel(times, q_cores) end)
+  #This function recieves the number of times and the cores
+  def main(n_times, q_cores) do
+    time_seq = Hw.Primes.time(fn -> Hw.Primes.sum_primes(n_times) end)
+    time_parallel = Hw.Primes.time(fn -> Hw.Primes.sum_primes_parallel(n_times, q_cores) end)
     statistics(time_seq, time_parallel)
   end
 
